@@ -19,31 +19,28 @@ const myQuad = quad(
 const parsedJsonld = new ParserJsonld().import(
     Readable.from([
         JSON.stringify({
-          "@context": ["http://www.w3.org/ns/csvw", {"@language": "en"}],
-          "tables": [{
-            "url": "http://opendata.leeds.gov.uk/downloads/gritting/grit_bins.csv",
-            "tableSchema": {
-              "columns": [
+          "@context": "http://www.w3.org/ns/csvw",
+          "url": "test001-minimal.csv",
+          "tableSchema": {
+            "aboutUrl": "http://example.org/id/{ID}",
+            "columns": [
               {
-                "name": "location",
-                "datatype": "integer"
+                "titles": "ID",
+                "propertyUrl": "http://vocab.example.org/id"
               },
               {
-                "name": "easting",
-                "datatype": "decimal",
-                "propertyUrl": "http://data.ordnancesurvey.co.uk/ontology/spatialrelations/easting"
+                "titles": "String",
+                "propertyUrl": "http://vocab.example.org/string"
               },
               {
-                "name": "northing",
-                "datatype": "decimal",
-                "propertyUrl": "http://data.ordnancesurvey.co.uk/ontology/spatialrelations/northing"
+                "titles": "Int",
+                "propertyUrl": "http://vocab.example.org/int"
+              },
+              {
+                "titles": "Reference",
+                "propertyUrl": "http://vocab.example.org/reference"
               }
-              ],
-              "aboutUrl": "#{location}"
-            }
-          }],
-          "dialect": {
-            "header": false
+            ]
           }
         })
     ])
@@ -69,16 +66,10 @@ const parser = new ParserCSVW({
 
 const stream = parser.import(
     Readable.from([
-`42,425584,439562
-43,425301,439519
-44,425379,439596
-45,425024,439663
-46,424915,439697
-48,425157,440347
-49,424784,439681
-50,424708,439759
-51,424913,440642
-52,425342,440376`
+`ID,String,Int,Reference
+234345,Der Tag ist noch lang,12,234.1123
+343555,Die nacht wird kurz,14,234.4323
+234665,Jäää,53,777.4858`
     ])
 )
 
